@@ -2,6 +2,7 @@ const {
   addBookHandler,
   getAllBooksHandler,
   getBookByIdHandler,
+  updateBookByIdHandler,
 } = require('./handler');
 
 const router = [
@@ -20,11 +21,11 @@ const router = [
     path: '/books/{bookId}',
     handler: getBookByIdHandler,
   },
-  // {
-  //   method: 'PUT',
-  //   path: '/notes/{id}',
-  //   handler:
-  // },
+  {
+    method: 'PUT',
+    path: '/books/{bookId}',
+    handler: updateBookByIdHandler,
+  },
   // {
   //   method: 'DELETE',
   //   path: '/notes/{id}',
