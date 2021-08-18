@@ -44,7 +44,8 @@ const addBookHandler = (req, h) => {
     });
     res.code(400);
     return res;
-  } if (readPage > pageCount) {
+  }
+  if (readPage > pageCount) {
     const res = h.response({
       status: 'fail',
       message:
@@ -52,7 +53,8 @@ const addBookHandler = (req, h) => {
     });
     res.code(400);
     return res;
-  } if (isSuccess) {
+  }
+  if (isSuccess) {
     const res = h.response({
       status: 'success',
       message: 'Buku berhasil ditambahkan',
@@ -71,12 +73,40 @@ const addBookHandler = (req, h) => {
   return res;
 };
 
-// const getAllNotesHandler = () => ({
-//   status: 'success',
-//   data: {
-//     notes,
-//   },
-// });
+const getAllBooksHandler = (req, h) => {
+  const { name, reading, finished } = req.query;
+  let filteredBooks = bookshelf;
+
+  if (name !== undefined) {
+    // eslint-disable-next-line max-len
+    filteredBooks = filteredBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+  }
+
+  if (reading !== undefined) {
+    filteredBooks = filteredBooks.filter(
+      (book) => Number(reading) === Number(book.reading),
+    );
+  }
+
+  if (finished !== undefined) {
+    filteredBooks = filteredBooks.filter(
+      (book) => Number(finished) === Number(book.finished),
+    );
+  }
+
+  const res = h.response({
+    status: 'success',
+    data: {
+      books: filteredBooks.map((book) => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+      })),
+    },
+  });
+  res.code(200);
+  return res;
+};
 
 // const getDetailNoteHandler = (req, h) => {
 //   const { id } = req.params;
@@ -158,4 +188,5 @@ const addBookHandler = (req, h) => {
 
 module.exports = {
   addBookHandler,
+  getAllBooksHandler,
 };
