@@ -3,6 +3,7 @@ const {
   getAllBooksHandler,
   getBookByIdHandler,
   updateBookByIdHandler,
+  deleteBookByIdHandler,
 } = require('./handler');
 
 const router = [
@@ -26,11 +27,11 @@ const router = [
     path: '/books/{bookId}',
     handler: updateBookByIdHandler,
   },
-  // {
-  //   method: 'DELETE',
-  //   path: '/notes/{id}',
-  //   handler:
-  // },
+  {
+    method: 'DELETE',
+    path: '/books/{bookId}',
+    handler: deleteBookByIdHandler,
+  },
 ];
 
 module.exports = router;
