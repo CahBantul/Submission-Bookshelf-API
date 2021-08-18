@@ -108,85 +108,32 @@ const getAllBooksHandler = (req, h) => {
   return res;
 };
 
-// const getDetailNoteHandler = (req, h) => {
-//   const { id } = req.params;
+const getBookByIdHandler = (req, h) => {
+  const { bookId } = req.params;
+  const selectedbook = bookshelf.filter((n) => n.id === bookId)[0];
 
-//   const selectedNote = notes.filter((note) => note.id === id)[0];
+  if (selectedbook !== undefined) {
+    const response = h.response({
+      status: 'success',
+      data: {
+        book: selectedbook,
+      },
+    });
+    response.code(200);
+    return response;
+  }
 
-//   if (selectedNote !== undefined) {
-//     return {
-//       status: 'success',
-//       data: {
-//         note: selectedNote,
-//       },
-//     };
-//   }
-
-//   const res = h.response({
-//     status: 'fail',
-//     message: 'Catatan tidak ditemukan',
-//   });
-//   res.code(404);
-//   return res;
-// };
-
-// const editNoteByIdHandler = (request, h) => {
-//   const { id } = request.params;
-
-//   const { title, tags, body } = request.payload;
-//   const updatedAt = new Date().toISOString();
-
-//   const index = notes.findIndex((note) => note.id === id);
-
-//   if (index !== -1) {
-//     notes[index] = {
-//       ...notes[index],
-//       title,
-//       tags,
-//       body,
-//       updatedAt,
-//     };
-
-//     const response = h.response({
-//       status: 'success',
-//       message: 'Catatan berhasil diperbarui',
-//     });
-//     response.code(200);
-//     return response;
-//   }
-
-//   const response = h.response({
-//     status: 'fail',
-//     message: 'Gagal memperbarui catatan. Id tidak ditemukan',
-//   });
-//   response.code(404);
-//   return response;
-// };
-
-// const deleteNoteByIdHandler = (request, h) => {
-//   const { id } = request.params;
-
-//   const index = notes.findIndex((note) => note.id === id);
-
-//   if (index !== -1) {
-//     notes.splice(index, 1);
-//     const response = h.response({
-//       status: 'success',
-//       message: 'Catatan berhasil dihapus',
-//     });
-//     response.code(200);
-//     return response;
-//   }
-
-//   const response = h.response({
-//     status: 'fail',
-//     message: 'Catatan gagal dihapus. Id tidak ditemukan',
-//   });
-//   response.code(404);
-//   return response;
-// };
+  const response = h
+    .response({
+      status: 'fail',
+      message: 'Buku tidak ditemukan',
+    })
+    .code(404);
+  return response;
+};
 
 module.exports = {
   addBookHandler,
   getAllBooksHandler,
+  getBookByIdHandler,
 };
