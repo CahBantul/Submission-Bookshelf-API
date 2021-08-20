@@ -33,10 +33,6 @@ const addBookHandler = (req, h) => {
     updatedAt,
   };
 
-  bookshelf.push(newBook);
-
-  const isSuccess = bookshelf.filter((book) => book.id === id).length > 0;
-
   if (!name) {
     const res = h.response({
       status: 'fail',
@@ -54,6 +50,9 @@ const addBookHandler = (req, h) => {
     res.code(400);
     return res;
   }
+  bookshelf.push(newBook);
+
+  const isSuccess = bookshelf.filter((book) => book.id === id).length > 0;
   if (isSuccess) {
     const res = h.response({
       status: 'success',
@@ -79,18 +78,20 @@ const getAllBooksHandler = (req, h) => {
 
   if (name !== undefined) {
     // eslint-disable-next-line max-len
-    filteredBooks = filteredBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+    filteredBooks = filteredBooks.filter((book) =>
+      book.name.toLowerCase().includes(name.toLowerCase())
+    );
   }
 
   if (reading !== undefined) {
     filteredBooks = filteredBooks.filter(
-      (book) => Number(reading) === Number(book.reading),
+      (book) => Number(reading) === Number(book.reading)
     );
   }
 
   if (finished !== undefined) {
     filteredBooks = filteredBooks.filter(
-      (book) => Number(finished) === Number(book.finished),
+      (book) => Number(finished) === Number(book.finished)
     );
   }
 
