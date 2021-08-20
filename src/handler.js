@@ -78,20 +78,18 @@ const getAllBooksHandler = (req, h) => {
 
   if (name !== undefined) {
     // eslint-disable-next-line max-len
-    filteredBooks = filteredBooks.filter((book) =>
-      book.name.toLowerCase().includes(name.toLowerCase())
-    );
+    filteredBooks = filteredBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
   }
 
   if (reading !== undefined) {
     filteredBooks = filteredBooks.filter(
-      (book) => Number(reading) === Number(book.reading)
+      (book) => Number(reading) === Number(book.reading),
     );
   }
 
   if (finished !== undefined) {
     filteredBooks = filteredBooks.filter(
-      (book) => Number(finished) === Number(book.finished)
+      (book) => Number(finished) === Number(book.finished),
     );
   }
 
